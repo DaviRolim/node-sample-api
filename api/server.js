@@ -6,7 +6,7 @@ const app = express(),
       bodyParser = require("body-parser");
       port = 80;
 
-// place holder for the data
+// place holder for thedata
 const users = [];
 
 app.use(bodyParser.json());
