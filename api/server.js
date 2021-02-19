@@ -1,17 +1,21 @@
 const express = require('express');
-const path = require('path');
 const randomId = require('random-id');
 const cors = require("cors")
 const app = express(),
       bodyParser = require("body-parser");
-      port = 80;
+const port = 3000;
+      
+const morgan = require('morgan')
+app.use(morgan('combined'));
 
 // place holder for thedata
 const users = [];
 
+
 app.use(bodyParser.json());
-app.use(cors)
-// app.use(express.static(path.join(__dirname, '../my-app/dist')));
+// app.use(cors)
+
+app.use('/health', require('express-healthcheck')());
 
 app.get('/api/users', (req, res) => {
   console.log('api/users called!!!!!!!')
@@ -25,10 +29,6 @@ app.post('/api/user', (req, res) => {
   users.push(user);
   res.json("user addedd");
 });
-
-// app.get('/', (req,res) => {
-//   res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
-// });
 
 app.listen(port, () => {
     console.log(`Server listening on the port::${port}`);
