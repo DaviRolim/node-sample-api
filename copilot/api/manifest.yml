@@ -13,7 +13,14 @@ image:
   build: ./Dockerfile
   # Port exposed through your container to route traffic to it.
   port: 3000
-
+  
+  healthcheck:
+    # The command the container runs to determine if it's healthy.
+    command: ["CMD-SHELL", "curl -f -s http://localhost:3000/health/ || exit 1"]
+    interval: 10s  # Time period between healthchecks. Default is 10s.
+    retries: 2      # Number of times to retry before container is deemed unhealthy. Default is 2.
+    timeout: 3s     # How long to wait before considering the healthcheck failed. Default is 5s.
+    start_period: 0s # Grace period within which to provide containers time to bootstrap before failed health checks count towards the maximum number of retries. Default is 0s.
 # Number of CPU units for the task.
 cpu: 256
 # Amount of memory in MiB used by the task.
